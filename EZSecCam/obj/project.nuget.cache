@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "dgSpecHash": "3SyI1eyn2pB7ldkMS+SdnYA0Jkkftmj/JISm0zL2EAf6fM0CN+O81ZdB5oXZmP8Iq8+6cezEbr1gIHNoOgqWhg==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\EZRoot\\source\\repos\\EZSecCam\\EZSecCam\\EZSecCam.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\EZRoot\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",
+    "C:\\Users\\EZRoot\\.nuget\\packages\\microsoft.win32.systemevents\\4.7.0\\microsoft.win32.systemevents.4.7.0.nupkg.sha512",
+    "C:\\Users\\EZRoot\\.nuget\\packages\\opencvsharp4\\4.3.0.20200524\\opencvsharp4.4.3.0.20200524.nupkg.sha512",
+    "C:\\Users\\EZRoot\\.nuget\\packages\\opencvsharp4.runtime.win\\4.3.0.20200524\\opencvsharp4.runtime.win.4.3.0.20200524.nupkg.sha512",
+    "C:\\Users\\EZRoot\\.nuget\\packages\\opencvsharp4.windows\\4.3.0.20200524\\opencvsharp4.windows.4.3.0.20200524.nupkg.sha512",
+    "C:\\Users\\EZRoot\\.nuget\\packages\\system.drawing.common\\4.7.0\\system.drawing.common.4.7.0.nupkg.sha512",
+    "C:\\Users\\EZRoot\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\4.7.1\\system.runtime.compilerservices.unsafe.4.7.1.nupkg.sha512"
+  ],
+  "logs": []
+}
