@@ -35,7 +35,7 @@ namespace EZSecCam
             
         }
 
-        private void Button1_Click(object sender, RoutedEventArgs e)
+        private void StartCameraButton_Click(object sender, RoutedEventArgs e)
         {
             StartWebcam();
         }
@@ -56,32 +56,73 @@ namespace EZSecCam
 
             try
             {
-                capture.Open(1);
+                capture.Open(0);
 
                 Console.WriteLine("GetBackendName " + capture.GetBackendName());
                 Console.WriteLine("Channel " + capture.Get(VideoCaptureProperties.Channel));
                 Console.WriteLine("Guid " + capture.Guid);
                 Console.WriteLine("IsOpened " + capture.IsOpened());
-                Console.WriteLine("capture " + capture.ToString());
-
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Console.Write("Failed to find cam: "+e.Message);
+                return;
             }
 
+            //TODO: Create thread to make webcam faster
             DispatcherTimer Timer = new DispatcherTimer();
-            Timer.Tick += Timer_Tick;
-            Timer.Interval = TimeSpan.FromMilliseconds(30);
+            Timer.Tick += CameraFrameUpdate;
+            Timer.Interval = TimeSpan.FromMilliseconds(230);
             Timer.Start();
+
+            //TODO: Create thread to make face detection faster
+            DispatcherTimer Timer2 = new DispatcherTimer();
+            Timer2.Tick += CascadeFaceDetectorFrameUpdate;
+            Timer2.Interval = TimeSpan.FromMilliseconds(30);
+            Timer2.Start();
         }
 
-        private void Timer_Tick(object sender, EventArgs e)
+        private void CameraFrameUpdate(object sender, EventArgs e)
         {
             if (capture.Read(frame))
             {
-                Image1.Source = BitmapSourceConverter.ToBitmapSource(frame);
+                switch(Settings.filterType)
+                {
+                    case Settings.FilterType.None:
+                        break;
+                    case Settings.FilterType.FilterBrightness:
+                        Settings.UpdateBrightnessContrast(frame, frame, 50, 20);
+                        break;
+                }
+
+                WebcamImage.Source = BitmapSourceConverter.ToBitmapSource(frame);
             }
+        }
+
+        private void CascadeFaceDetectorFrameUpdate(object sender, EventArgs e)
+        {
+            if (capture.Read(frame))
+            {
+                var haarCascade = new CascadeClassifier(Settings.HarrcascadePath);
+                Mat haarResult = Settings.DetectFace(haarCascade, frame);
+
+                HistogramImage.Source = BitmapSourceConverter.ToBitmapSource(haarResult);
+            }
+        }
+
+        private void FilterCamButton_Click(object sender, RoutedEventArgs e)
+        {
+            Settings.filterType = Settings.FilterType.FilterBrightness;
+        }
+
+        private void ResetFilterButton_Click(object sender, RoutedEventArgs e)
+        {
+            Settings.filterType = Settings.FilterType.None;
+        }
+
+        private void HistogramButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

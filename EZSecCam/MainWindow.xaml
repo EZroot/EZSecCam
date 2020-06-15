@@ -5,10 +5,29 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EZSecCam"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="213" Width="267">
     <Grid>
-        <Image x:Name="Image1" HorizontalAlignment="Left" Height="370" Margin="10,10,0,0" VerticalAlignment="Top" Width="490"/>
-        <Button x:Name="Button1" Content="Start Cam" HorizontalAlignment="Left" Margin="621,341,0,0" VerticalAlignment="Top" Width="111" Click="Button1_Click"/>
-
+        <DockPanel LastChildFill="True">
+            <TabControl HorizontalAlignment="Stretch">
+                <TabItem Header="WebCam Security">
+                    <Grid Background="#FFE5E5E5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="80"/>
+                        </Grid.ColumnDefinitions>
+                        <Image x:Name="WebcamImage" Grid.Column="0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                        <Button x:Name="StartCameraButton" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Center" Content="Start Webcam" Click="StartCameraButton_Click" Width="Auto" Margin="0,16,0,0"/>
+                        <Button x:Name="FilterCamButton" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Center" Content="Filter Cam" Click="FilterCamButton_Click" Width="Auto" Margin="0,42,0,0"/>
+                        <Button x:Name="ResetFilterButton" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Center" Content="Reset Filter" Click="ResetFilterButton_Click" Width="Auto" Margin="1,67,0,0"/>
+                        <Button x:Name="HistogramButton" Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Left" Content="Histogram" Click="HistogramButton_Click" Width="Auto" Margin="9,92,0,0"/>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Settings">
+                    <Grid Background="#FFE5E5E5">
+                        <Image x:Name="HistogramImage" VerticalAlignment="Center" HorizontalAlignment="Center" Width="Auto" Height="Auto"/>
+                    </Grid>
+                </TabItem>
+            </TabControl>
+        </DockPanel>
     </Grid>
 </Window>
