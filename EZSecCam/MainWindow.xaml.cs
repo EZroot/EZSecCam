@@ -25,104 +25,78 @@ namespace EZSecCam
     /// </summary>
     public partial class MainWindow : Window
     {
-        VideoCapture capture;
-        Mat frame;
-        private Thread t;
-
         public MainWindow()
         {
             InitializeComponent();
-            
+
+            HaarcascadeFaceDetectionMenuItem.IsEnabled = false;
+            FilterMenuItem.IsEnabled = false;
+
+            Log("App Started", "Statis: Idle", "");
         }
 
-        private void StartCameraButton_Click(object sender, RoutedEventArgs e)
+        private void StartWebcamMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            StartWebcam();
+            //Start webcam thread
+            ThreadHandler.Instance.ProcessWithThreadPoolMethod(new WaitCallback(delegate (object state) 
+            { 
+                Camera.Instance.StartWebcam();
+            }));
+
+            //Show image
+            this.Dispatcher.BeginInvoke((Action)(() =>
+           {
+               //Update webcam image
+               DispatcherTimer Timer = new DispatcherTimer();
+               Timer.Tick += (sender, e) =>
+               {
+                   BitmapSource frame = Camera.Instance.GetNextFrame();
+                   WebcamImage.Source = frame;
+               };
+               Timer.Interval = TimeSpan.FromMilliseconds(30);
+               Timer.Start();
+           }));
+            Log("Monitoring Camera", "Statis: Success", "Camera Loaded");
+
+
+            HaarcascadeFaceDetectionMenuItem.IsEnabled = true;
+            FilterMenuItem.IsEnabled = true;
+            StartWebcamMenuItem.IsEnabled = false;
         }
 
-        private void StartWebcam()
+        private void HaarcascadeFaceDetectionMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            t = new Thread(delegate ()
+            if (HaarcascadeFaceDetectionMenuItem.IsChecked)
             {
-                this.Dispatcher.BeginInvoke(DispatcherPriority.SystemIdle, new Action(RunWebcam));
-            });
-            t.Start();
-        }
-
-        private void RunWebcam()
-        {
-            frame = new Mat();
-            capture = new VideoCapture();
-
-            try
-            {
-                capture.Open(0);
-
-                Console.WriteLine("GetBackendName " + capture.GetBackendName());
-                Console.WriteLine("Channel " + capture.Get(VideoCaptureProperties.Channel));
-                Console.WriteLine("Guid " + capture.Guid);
-                Console.WriteLine("IsOpened " + capture.IsOpened());
+                Settings.detectorType = Settings.DetectorType.Haarcascade;
+                Log("Haarcascade Face Detection", "Status: On", "Detecting faces");
             }
-            catch (Exception e)
+            else
             {
-                Console.Write("Failed to find cam: "+e.Message);
-                return;
-            }
-
-            //TODO: Create thread to make webcam faster
-            DispatcherTimer Timer = new DispatcherTimer();
-            Timer.Tick += CameraFrameUpdate;
-            Timer.Interval = TimeSpan.FromMilliseconds(230);
-            Timer.Start();
-
-            //TODO: Create thread to make face detection faster
-            DispatcherTimer Timer2 = new DispatcherTimer();
-            Timer2.Tick += CascadeFaceDetectorFrameUpdate;
-            Timer2.Interval = TimeSpan.FromMilliseconds(30);
-            Timer2.Start();
-        }
-
-        private void CameraFrameUpdate(object sender, EventArgs e)
-        {
-            if (capture.Read(frame))
-            {
-                switch(Settings.filterType)
-                {
-                    case Settings.FilterType.None:
-                        break;
-                    case Settings.FilterType.FilterBrightness:
-                        Settings.UpdateBrightnessContrast(frame, frame, 50, 20);
-                        break;
-                }
-
-                WebcamImage.Source = BitmapSourceConverter.ToBitmapSource(frame);
+                Settings.detectorType = Settings.DetectorType.None;
+                Log("Haarcascade Face Detection", "Status: Off", "");
             }
         }
 
-        private void CascadeFaceDetectorFrameUpdate(object sender, EventArgs e)
+        private void FilterMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            if (capture.Read(frame))
+            if (FilterMenuItem.IsChecked)
             {
-                var haarCascade = new CascadeClassifier(Settings.HarrcascadePath);
-                Mat haarResult = Settings.DetectFace(haarCascade, frame);
-
-                HistogramImage.Source = BitmapSourceConverter.ToBitmapSource(haarResult);
+                Settings.filterType = Settings.FilterType.FilterBrightness;
+                Log("Filtering frame", "Status: On", "Filtering Frame");
+            }
+            else
+            {
+                Settings.filterType = Settings.FilterType.None;
+                Log("Filtering frame", "Status: Off", "");
             }
         }
 
-        private void FilterCamButton_Click(object sender, RoutedEventArgs e)
+        public void Log(string progress, string status, string info)
         {
-            Settings.filterType = Settings.FilterType.FilterBrightness;
-        }
-
-        private void ResetFilterButton_Click(object sender, RoutedEventArgs e)
-        {
-            Settings.filterType = Settings.FilterType.None;
-        }
-
-        private void HistogramButton_Click(object sender, RoutedEventArgs e)
-        {
-
+            ProgressLabel.Content = progress;
+            StatusLabel.Content = status;
+            InfoLabel.Content = info;
         }
     }
 }

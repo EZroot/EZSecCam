@@ -11,17 +11,26 @@ namespace EZSecCam
 {
     public class Settings
     {
+        public const string HAARCASCADE_FACES = "Data/haarcascade_frontalface_default.xml";
+        public const string HAARCASCADE_EYES = "Data/haarcascade_eye_tree_eyeglasses.xml";
+        public const string FACE_PICTURE = "Data/yalta.jpg";
+        public const string FACE_PICTURE_PNG = "Data/lenna.png";
+        public const string FACE_MODEL = "Data/res10_300x300_ssd_iter_140000_fp16.caffemodel";
+
         public enum FilterType
         {
             None,
             FilterBrightness
         }
 
-        public static FilterType filterType = FilterType.None;
+        public enum DetectorType
+        {
+            None,
+            Haarcascade
+        }
 
-         public const string HarrcascadePath = "Data/haarcascade_frontalface_default.xml";
-         public const string FacepicturePath = "Data/yalta.jpg";
-        public const string FacepicturePathPng = "Data/lenna.png";
+        public static FilterType filterType = FilterType.None;
+        public static DetectorType detectorType = DetectorType.None;
 
         public static void UpdateBrightnessContrast(Mat src, Mat modifiedSrc, int brightness, int contrast)
         {
@@ -60,17 +69,9 @@ namespace EZSecCam
                 // Render all detected faces
                 foreach (Rect face in faces)
                 {
-                    var center = new Point
-                    {
-                        X = (int)(face.X + face.Width * 0.5),
-                        Y = (int)(face.Y + face.Height * 0.5)
-                    };
-                    var axes = new OpenCvSharp.Size
-                    {
-                        Width = (int)(face.Width * 0.5),
-                        Height = (int)(face.Height * 0.5)
-                    };
-                    Cv2.Ellipse(result, center, axes, 0, 0, 360, new Scalar(255, 0, 255), 4);
+                    var color = Scalar.FromRgb(255, 0, 0);
+
+                    Cv2.Rectangle(result, face, color, 1);
                 }
             }
             return result;

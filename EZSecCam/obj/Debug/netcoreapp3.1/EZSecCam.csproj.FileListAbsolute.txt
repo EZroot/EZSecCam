@@ -31,3 +31,4 @@ C:\Users\EZRoot\source\repos\EZSecCam\EZSecCam\obj\Debug\netcoreapp3.1\EZSecCam.
 C:\Users\EZRoot\source\repos\EZSecCam\EZSecCam\bin\Debug\netcoreapp3.1\Data\haarcascade_frontalface_default.xml
 C:\Users\EZRoot\source\repos\EZSecCam\EZSecCam\bin\Debug\netcoreapp3.1\Data\yalta.jpg
 C:\Users\EZRoot\source\repos\EZSecCam\EZSecCam\bin\Debug\netcoreapp3.1\Data\lenna.png
+C:\Users\EZRoot\source\repos\EZSecCam\EZSecCam\bin\Debug\netcoreapp3.1\Data\haarcascade_eye_tree_eyeglasses.xml
