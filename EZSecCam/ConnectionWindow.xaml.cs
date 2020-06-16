@@ -35,5 +35,10 @@ namespace EZSecCam
             ConnectionSettings.PublicKeyExp = PublicExponentInputTextBox.Text;
             ConnectionSettings.WriteConfig();
         }
+
+        public void StartServerMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

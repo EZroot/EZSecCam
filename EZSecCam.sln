@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30104.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EZSecCam", "EZSecCam\EZSecCam.csproj", "{9C3E15F1-97FD-47D1-B0AB-920906D21E70}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EZSecCam", "EZSecCam\EZSecCam.csproj", "{9C3E15F1-97FD-47D1-B0AB-920906D21E70}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EZSecServer", "EZSecServer\EZSecServer.csproj", "{1647DC75-8D36-4911-883D-2D560613EA9F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{9C3E15F1-97FD-47D1-B0AB-920906D21E70}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C3E15F1-97FD-47D1-B0AB-920906D21E70}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C3E15F1-97FD-47D1-B0AB-920906D21E70}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1647DC75-8D36-4911-883D-2D560613EA9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1647DC75-8D36-4911-883D-2D560613EA9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1647DC75-8D36-4911-883D-2D560613EA9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1647DC75-8D36-4911-883D-2D560613EA9F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
