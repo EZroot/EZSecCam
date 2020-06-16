@@ -1,4 +1,4 @@
-﻿input: "data"
+input: "data"
 input_shape {
   dim: 1
   dim: 3
@@ -1779,7 +1779,7 @@ layer {
     share_location: true
     background_label_id: 0
     nms_param {
-      nms_threshold: 0.3
+      nms_threshold: 0.45
       top_k: 400
     }
     code_type: CENTER_SIZE

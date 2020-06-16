@@ -16,6 +16,7 @@
                     </MenuItem>
                     <MenuItem Header="_Detector">
                         <MenuItem x:Name="HaarcascadeFaceDetectionMenuItem" Header="_Haarcascade" Click="HaarcascadeFaceDetectionMenuItem_Click" InputGestureText="F3" IsCheckable="true"/>
+                        <MenuItem x:Name="DNNFaceDetectionMenuItem" Header="_Deep Neural Network" Click="DNNFaceDetectionMenuItem_Click" IsCheckable="true"/>
                     </MenuItem>
                     <MenuItem Header="_Filter">
                         <MenuItem x:Name="FilterMenuItem" Header="_Filter Frame" Click="FilterMenuItem_Click" InputGestureText="F4" IsCheckable="true"/>
@@ -32,7 +33,8 @@
                     </Grid.RowDefinitions>
                     <Image x:Name="WebcamImage" Grid.Column="0"/>
                     <Label x:Name="InfoLabel" Content="This is a test for information dawg" Grid.Column="1" Grid.Row="0"/>
-                    <Label x:Name="ProgressLabel" Content="Progress Resport: " Grid.Column="0" Grid.Row="1"/>
+                    <Label x:Name="ProgressLabel" VerticalAlignment="Top" Content="Progress Resport: " Margin="0,-8,0,0" Grid.Column="0" Grid.Row="1"/>
+                    <Slider x:Name="ConfidenceSlider" VerticalAlignment="Bottom" Minimum="0" Maximum="100"  ValueChanged="ConfidenceSlider_OnChange" Grid.Row="1" Grid.Column="0"/>
                     <Label x:Name="StatusLabel" Content="Status: Idle" Grid.Column="1" Grid.Row="1"/>
                 </Grid>
             </DockPanel>

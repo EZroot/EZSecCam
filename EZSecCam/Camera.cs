@@ -1,5 +1,6 @@
 ﻿using OpenCvSharp;
 using OpenCvSharp.Extensions;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -35,7 +36,7 @@ namespace EZSecCam
 
         public void StartWebcam()
         {
-            Console.WriteLine("Starting camera..");
+            Log.Debug("Starting Camera... {0}","Channel 0");
 
             frame = new Mat();
             capture = new VideoCapture();
@@ -44,13 +45,13 @@ namespace EZSecCam
             {
                 capture.Open(0);
 
-                Console.WriteLine("GetBackendName " + capture.GetBackendName());
-                Console.WriteLine("Channel " + capture.Get(VideoCaptureProperties.Channel));
-                Console.WriteLine("IsOpened " + capture.IsOpened());
+                Log.Debug("GetBackendName {0}",  capture.GetBackendName());
+                Log.Debug("Channel  {0}", capture.Get(VideoCaptureProperties.Channel));
+                Log.Debug("IsOpened  {0}", capture.IsOpened());
             }
             catch (Exception e)
             {
-                Console.Write("Failed to find cam: " + e.Message);
+                Log.Fatal("Failed to find cam {0} ", e.Message);
                 return;
             }
         }
@@ -77,6 +78,9 @@ namespace EZSecCam
                     case Settings.DetectorType.Haarcascade:
                         var haarCascade = new CascadeClassifier(Settings.HAARCASCADE_FACES);
                         frame = Settings.DetectFace(haarCascade, frame);
+                        break;
+                    case Settings.DetectorType.DNN:
+                        frame = Settings.DetectFaceDNN(frame);
                         break;
                 }
                 return BitmapSourceConverter.ToBitmapSource(frame);
