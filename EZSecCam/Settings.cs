@@ -110,15 +110,16 @@ namespace EZSecCam
                     int x2 = (int)(detectionMat.At<float>(i, 5) * frameWidth);
                     int y2 = (int)(detectionMat.At<float>(i, 6) * frameHeight);
 
-                    Cv2.Rectangle(frame, new Point(x1, y1), new Point(x2, y2), new Scalar(0, 255, 0), 2,
+                    Cv2.Rectangle(frame, new Point(x1, y1), new Point(x2, y2), new Scalar(255, 0, 0), 2,
                         LineTypes.Link4);
                     Cv2.PutText(frame,
-                            "Face Confidence = "+(confidence*100).ToString("F1")+"%",
+                            "Confidence "+(confidence*100).ToString("F1")+"%",
                             new Point(x2, y2),
                             HersheyFonts.HersheySimplex,
-                            0.5f,
+                            .8f,
                             new Scalar(0, 255, 0),
-                            2);
+                            1,
+                            LineTypes.AntiAlias);
                 }
             }
             return frame;

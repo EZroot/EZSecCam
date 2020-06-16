@@ -21,6 +21,11 @@
                     <MenuItem Header="_Filter">
                         <MenuItem x:Name="FilterMenuItem" Header="_Filter Frame" Click="FilterMenuItem_Click" InputGestureText="F4" IsCheckable="true"/>
                     </MenuItem>
+                    <MenuItem Header="_Network">
+                        <MenuItem x:Name="StartServerMenuItem" Header="_Start Server" Click="StartServerMenuItem_Click"/>
+                        <MenuItem x:Name="ConnectMenuItem" Header="_Connect to IP" Click="ConnectMenuItem_Click"/>
+                        <MenuItem x:Name="ConnectSettingsMenuItem" Header="_Connection Settings" Click="ConnectSettingsMenuItem_Click"/>
+                    </MenuItem>
                 </Menu>
                 <Grid DockPanel.Dock="Bottom" Margin="3">
                     <Grid.ColumnDefinitions>
@@ -32,9 +37,9 @@
                         <RowDefinition Height="1*" />
                     </Grid.RowDefinitions>
                     <Image x:Name="WebcamImage" Grid.Column="0"/>
-                    <Label x:Name="InfoLabel" Content="This is a test for information dawg" Grid.Column="1" Grid.Row="0"/>
-                    <Label x:Name="ProgressLabel" VerticalAlignment="Top" Content="Progress Resport: " Margin="0,-8,0,0" Grid.Column="0" Grid.Row="1"/>
-                    <Slider x:Name="ConfidenceSlider" VerticalAlignment="Bottom" Minimum="0" Maximum="100"  ValueChanged="ConfidenceSlider_OnChange" Grid.Row="1" Grid.Column="0"/>
+                    <Label x:Name="InfoLabel" Content="" Grid.Column="1" Grid.Row="0"/>
+                    <Label x:Name="ProgressLabel" VerticalAlignment="Top" Content="Confidence 60%" Margin="0,-8,0,0" Grid.Column="0" Grid.Row="1"/>
+                    <Slider x:Name="ConfidenceSlider" Value="60" VerticalAlignment="Bottom" Minimum="0" Maximum="100"  ValueChanged="ConfidenceSlider_OnChange" Grid.Row="1" Grid.Column="0"/>
                     <Label x:Name="StatusLabel" Content="Status: Idle" Grid.Column="1" Grid.Row="1"/>
                 </Grid>
             </DockPanel>

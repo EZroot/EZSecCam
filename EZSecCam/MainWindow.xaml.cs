@@ -42,9 +42,8 @@ namespace EZSecCam
 
             InitializeComponent();
 
-            HaarcascadeFaceDetectionMenuItem.IsEnabled = false;
-            FilterMenuItem.IsEnabled = false;
-            DNNFaceDetectionMenuItem.IsEnabled = false;
+            DisableDetectorButtons();
+            DisableFilterButtons();
 
             Log.Debug("App Started {0}", "Statis: Idle");
         }
@@ -76,14 +75,16 @@ namespace EZSecCam
                 }));
             }));
 
-            HaarcascadeFaceDetectionMenuItem.IsEnabled = true;
-            FilterMenuItem.IsEnabled = true;
-            DNNFaceDetectionMenuItem.IsEnabled = true;
+            EnableDetectorButtons();
+            EnableFilterButtons();
             StartWebcamMenuItem.IsEnabled = false;
         }
 
         private void HaarcascadeFaceDetectionMenuItem_Click(object sender, RoutedEventArgs e)
         {
+            DisableDetectorButtons();
+            HaarcascadeFaceDetectionMenuItem.IsEnabled = true;
+
             if (HaarcascadeFaceDetectionMenuItem.IsChecked)
             {
                 Settings.detectorType = Settings.DetectorType.Haarcascade;
@@ -91,6 +92,7 @@ namespace EZSecCam
             }
             else
             {
+                EnableDetectorButtons();
                 Settings.detectorType = Settings.DetectorType.None;
                 Log.Debug("Haarcascade Face Detection {0}", "Status: Off");
             }
@@ -98,13 +100,18 @@ namespace EZSecCam
 
         private void DNNFaceDetectionMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            if(DNNFaceDetectionMenuItem.IsChecked)
+            DisableDetectorButtons();
+            DNNFaceDetectionMenuItem.IsEnabled = true;
+            ConfidenceSlider.IsEnabled = true;
+
+            if (DNNFaceDetectionMenuItem.IsChecked)
             {
                 Settings.detectorType = Settings.DetectorType.DNN;
                 Log.Debug("DNN Face Detection {0}", "Status: On");
             }
             else
             {
+                EnableDetectorButtons();
                 Settings.detectorType = Settings.DetectorType.None;
                 Log.Debug("DNN Face Detection {0}", "Status: Off");
             }
@@ -112,6 +119,9 @@ namespace EZSecCam
 
         private void FilterMenuItem_Click(object sender, RoutedEventArgs e)
         {
+            DisableFilterButtons();
+            FilterMenuItem.IsEnabled = true;
+
             if (FilterMenuItem.IsChecked)
             {
                 Settings.filterType = Settings.FilterType.FilterBrightness;
@@ -119,6 +129,7 @@ namespace EZSecCam
             }
             else
             {
+                EnableFilterButtons();
                 Settings.filterType = Settings.FilterType.None;
                 Log.Debug("Filtering frame {0}", "Status: Off");
             }
@@ -128,8 +139,48 @@ namespace EZSecCam
         {
             float g = (float)ConfidenceSlider.Value;
             Settings.Confidence = g * 0.01f;
-            ProgressLabel.Content = "Confidence: " + g.ToString("F2")+"%";
-            InfoLabel.Content = "Minimum confidence to look for = "+(g * 0.01f).ToString("F2") + "%";
+            ProgressLabel.Content = "Confidence Detection = " + g.ToString("F2")+"%";
+        }
+
+        private void ConnectSettingsMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            ConnectionWindow connectWindow = new ConnectionWindow();
+            connectWindow.Show();
+        }
+
+        private void ConnectMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            ConnectionWindow connectWindow = new ConnectionWindow();
+            connectWindow.Show();
+        }
+
+        public void StartServerMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            ConnectionSettings.StartServer();
+        }
+
+        private void DisableFilterButtons()
+        {
+            FilterMenuItem.IsEnabled = false;
+        }
+
+        private void EnableFilterButtons()
+        {
+            FilterMenuItem.IsEnabled = true;
+        }
+
+        private void DisableDetectorButtons()
+        {
+            HaarcascadeFaceDetectionMenuItem.IsEnabled = false;
+            DNNFaceDetectionMenuItem.IsEnabled = false;
+            ConfidenceSlider.IsEnabled = false;
+        }
+
+        private void EnableDetectorButtons()
+        {
+            HaarcascadeFaceDetectionMenuItem.IsEnabled = true;
+            DNNFaceDetectionMenuItem.IsEnabled = true;
+            ConfidenceSlider.IsEnabled = true;
         }
     }
 }
