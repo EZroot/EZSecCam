@@ -1,22 +1,10 @@
 ﻿using Microsoft.Extensions.Configuration;
-using OpenCvSharp;
 using OpenCvSharp.Extensions;
 using Serilog;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 using Window = System.Windows.Window;
 
@@ -29,6 +17,7 @@ namespace EZSecCam
     {
         public MainWindow()
         {
+            #region SeriLogger
             IConfiguration configuration = new ConfigurationBuilder()
                 .AddJsonFile(Settings.LOG_CONFIG)
                 .Build();
@@ -39,7 +28,9 @@ namespace EZSecCam
                 .CreateLogger();
 
             Log.Information("Started debugger");
-
+            #endregion
+            //Settings.ReadConfig();
+            Settings.Init(); //Loads data for YoloV3 DNN, speeds up shit significantly
             InitializeComponent();
 
             DisableDetectorButtons();
@@ -51,23 +42,17 @@ namespace EZSecCam
         private void StartWebcamMenuItem_Click(object sender, RoutedEventArgs e)
         {
             //Start webcam thread
-            ThreadHandler.Instance.ProcessWithThreadPoolMethod(new WaitCallback(delegate (object state) 
-            { 
-                Camera.Instance.StartWebcam();
-
-            }));
-
-            //Start webcam thread
             ThreadHandler.Instance.ProcessWithThreadPoolMethod(new WaitCallback(delegate (object state)
             {
-                //Show image
+                Camera.Instance.StartWebcam();
+
                 this.Dispatcher.BeginInvoke((Action)(() =>
                 {
                     //Update webcam image
                     DispatcherTimer Timer = new DispatcherTimer();
                     Timer.Tick += (sender, e) =>
                     {
-                        BitmapSource frame = Camera.Instance.GetNextFrame();
+                        BitmapSource frame = BitmapSourceConverter.ToBitmapSource(Camera.Instance.GetNextFrame());
                         WebcamImage.Source = frame;
                     };
                     Timer.Interval = TimeSpan.FromMilliseconds(30);
@@ -79,6 +64,7 @@ namespace EZSecCam
             EnableFilterButtons();
             StartWebcamMenuItem.IsEnabled = false;
         }
+
 
         private void HaarcascadeFaceDetectionMenuItem_Click(object sender, RoutedEventArgs e)
         {
@@ -98,22 +84,42 @@ namespace EZSecCam
             }
         }
 
-        private void DNNFaceDetectionMenuItem_Click(object sender, RoutedEventArgs e)
+        private void CaffeDNNFaceDetectionMenuItem_Click(object sender, RoutedEventArgs e)
         {
             DisableDetectorButtons();
-            DNNFaceDetectionMenuItem.IsEnabled = true;
+            CaffeDNNFaceDetectionMenuItem.IsEnabled = true;
             ConfidenceSlider.IsEnabled = true;
 
-            if (DNNFaceDetectionMenuItem.IsChecked)
+            if (CaffeDNNFaceDetectionMenuItem.IsChecked)
             {
-                Settings.detectorType = Settings.DetectorType.DNN;
-                Log.Debug("DNN Face Detection {0}", "Status: On");
+                Settings.detectorType = Settings.DetectorType.Caffe;
+                Log.Debug("Caffe DNN Face Detection {0}", "Status: On");
             }
             else
             {
                 EnableDetectorButtons();
                 Settings.detectorType = Settings.DetectorType.None;
-                Log.Debug("DNN Face Detection {0}", "Status: Off");
+                Log.Debug("Caffe DNN Face Detection {0}", "Status: Off");
+            }
+        }
+
+        private void YoloV3DNNFaceDetectionMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            DisableDetectorButtons();
+            YoloV3DNNFaceDetectionMenuItem.IsEnabled = true;
+            ConfidenceSlider.IsEnabled = true;
+
+            if (YoloV3DNNFaceDetectionMenuItem.IsChecked)
+            {
+                //Settings.Yolov3Init();
+                Settings.detectorType = Settings.DetectorType.YoloV3;
+                Log.Debug("YoloV3 (You only look once) DNN Face Detection {0}", "Status: On");
+            }
+            else
+            {
+                EnableDetectorButtons();
+                Settings.detectorType = Settings.DetectorType.None;
+                Log.Debug("YoloV3 (You only look once) DNN Face Detection {0}", "Status: Off");
             }
         }
 
@@ -139,7 +145,7 @@ namespace EZSecCam
         {
             float g = (float)ConfidenceSlider.Value;
             Settings.Confidence = g * 0.01f;
-            ProgressLabel.Content = "Confidence Detection = " + g.ToString("F2")+"%";
+            ProgressLabel.Content = "Confidence Detection = " + g.ToString("F2") + "%";
         }
 
         private void ConnectSettingsMenuItem_Click(object sender, RoutedEventArgs e)
@@ -156,7 +162,7 @@ namespace EZSecCam
 
         public void StartServerMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            ConnectionSettings.StartServer();
+            //Launch EZServer.exe binary
         }
 
         private void DisableFilterButtons()
@@ -172,14 +178,16 @@ namespace EZSecCam
         private void DisableDetectorButtons()
         {
             HaarcascadeFaceDetectionMenuItem.IsEnabled = false;
-            DNNFaceDetectionMenuItem.IsEnabled = false;
+            CaffeDNNFaceDetectionMenuItem.IsEnabled = false;
+            YoloV3DNNFaceDetectionMenuItem.IsEnabled = false;
             ConfidenceSlider.IsEnabled = false;
         }
 
         private void EnableDetectorButtons()
         {
             HaarcascadeFaceDetectionMenuItem.IsEnabled = true;
-            DNNFaceDetectionMenuItem.IsEnabled = true;
+            CaffeDNNFaceDetectionMenuItem.IsEnabled = true;
+            YoloV3DNNFaceDetectionMenuItem.IsEnabled = true;
             ConfidenceSlider.IsEnabled = true;
         }
     }

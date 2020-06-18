@@ -1,14 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
 
 namespace EZSecCam
 {
@@ -22,7 +12,6 @@ namespace EZSecCam
             InitializeComponent();
 
             ConnectionSettings.ReadConfig();
-
             IPInputTextBox.Text = ConnectionSettings.ServerIp;
             PublicInputTextBox.Text = ConnectionSettings.PublicKey;
             PublicExponentInputTextBox.Text = ConnectionSettings.PublicKeyExp;
@@ -36,9 +25,14 @@ namespace EZSecCam
             ConnectionSettings.WriteConfig();
         }
 
-        public void StartServerMenuItem_Click(object sender, RoutedEventArgs e)
+        public void ConnectSettingsButton_OnClick(object sender, RoutedEventArgs e)
         {
-
+            Client.Connect();
+            for (int i = 0; i < 5; i++)
+            {
+                Client.SendData("Nooby nooberton is a noob");
+            }
+            Client.EndConnection();
         }
     }
 }

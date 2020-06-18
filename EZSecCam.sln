@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30104.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EZSecCam", "EZSecCam\EZSecCam.csproj", "{9C3E15F1-97FD-47D1-B0AB-920906D21E70}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EZSecServer", "EZSecServer\EZSecServer.csproj", "{1647DC75-8D36-4911-883D-2D560613EA9F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EZSecServer", "EZSecServer\EZSecServer.csproj", "{1647DC75-8D36-4911-883D-2D560613EA9F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

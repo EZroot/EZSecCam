@@ -25,5 +25,6 @@
         <TextBlock Text="Public Exp"  Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Top"/>
         <TextBox Margin="15" Text="65537" MinHeight="17" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Top" x:Name="PublicExponentInputTextBox"/>
         <Button x:Name="ApplySettingsButton" Content="Apply" Grid.Column="1" Grid.Row="5" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Margin="2" Click="ApplySettingsButton_OnClick" />
+        <Button x:Name="ConnectSettingsButton" Content="Connect to Server" Grid.Column="0" Grid.Row="5" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Margin="2" Click="ConnectSettingsButton_OnClick" />
     </Grid>
 </Window>

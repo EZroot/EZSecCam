@@ -16,7 +16,8 @@
                     </MenuItem>
                     <MenuItem Header="_Detector">
                         <MenuItem x:Name="HaarcascadeFaceDetectionMenuItem" Header="_Haarcascade" Click="HaarcascadeFaceDetectionMenuItem_Click" InputGestureText="F3" IsCheckable="true"/>
-                        <MenuItem x:Name="DNNFaceDetectionMenuItem" Header="_Deep Neural Network" Click="DNNFaceDetectionMenuItem_Click" IsCheckable="true"/>
+                        <MenuItem x:Name="CaffeDNNFaceDetectionMenuItem" Header="_Caffe DNN" Click="CaffeDNNFaceDetectionMenuItem_Click" IsCheckable="true"/>
+                        <MenuItem x:Name="YoloV3DNNFaceDetectionMenuItem" Header="_YoloV3 DNN (Recommended)" Click="YoloV3DNNFaceDetectionMenuItem_Click" IsCheckable="true"/>
                     </MenuItem>
                     <MenuItem Header="_Filter">
                         <MenuItem x:Name="FilterMenuItem" Header="_Filter Frame" Click="FilterMenuItem_Click" InputGestureText="F4" IsCheckable="true"/>

@@ -1,12 +1,7 @@
 ﻿using OpenCvSharp;
-using OpenCvSharp.Extensions;
 using Serilog;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
-using System.Windows.Media.Imaging;
-using System.Windows.Threading;
 
 namespace EZSecCam
 {
@@ -22,10 +17,10 @@ namespace EZSecCam
             {
                 if (instance == null)
                 {
-                        if (instance == null)
-                        {
-                            instance = new Camera();
-                        }
+                    if (instance == null)
+                    {
+                        instance = new Camera();
+                    }
                 }
                 return instance;
             }
@@ -36,7 +31,7 @@ namespace EZSecCam
 
         public void StartWebcam()
         {
-            Log.Debug("Starting Camera... {0}","Channel 0");
+            Log.Debug("Starting Camera... {0}", "Channel 0");
 
             frame = new Mat();
             capture = new VideoCapture();
@@ -45,7 +40,7 @@ namespace EZSecCam
             {
                 capture.Open(0);
 
-                Log.Debug("GetBackendName {0}",  capture.GetBackendName());
+                Log.Debug("GetBackendName {0}", capture.GetBackendName());
                 Log.Debug("Channel  {0}", capture.Get(VideoCaptureProperties.Channel));
                 Log.Debug("IsOpened  {0}", capture.IsOpened());
             }
@@ -56,36 +51,51 @@ namespace EZSecCam
             }
         }
 
-        public BitmapSource GetNextFrame()
+        public Mat GetNextFrame()
         {
-            if (capture.Read(frame))
+            try
             {
-                //Filter Camera Image
-                switch (Settings.filterType)
+                if (capture.Read(frame))
                 {
-                    case Settings.FilterType.None:
-                        break;
-                    case Settings.FilterType.FilterBrightness:
-                        Settings.UpdateBrightnessContrast(frame, frame, 50, 20);
-                        break;
+                    Cv2.Resize(frame, frame, new Size(frame.Width / 3, frame.Height / 3));
+                    //Filter Camera Image
+                    switch (Settings.filterType)
+                    {
+                        case Settings.FilterType.None:
+                            break;
+                        case Settings.FilterType.FilterBrightness:
+                            Settings.UpdateBrightnessContrast(frame, frame, 50, 20);
+                            break;
+                    }
+
+                    //Detect people
+                    switch (Settings.detectorType)
+                    {
+                        case Settings.DetectorType.None:
+                            break;
+                        case Settings.DetectorType.Haarcascade:
+                            var haarCascade = new CascadeClassifier(Settings.HAARCASCADE_FACES);
+                            frame = Settings.DetectFace(haarCascade, frame);
+                            break;
+                        case Settings.DetectorType.Caffe:
+                            frame = Settings.DetectFaceCaffe(frame);
+                            break;
+                        case Settings.DetectorType.YoloV3:
+                            frame = Settings.DetectFaceYoloV3(frame);
+                            break;
+                    }
+                    return frame;
                 }
-                
-                //Detect people
-                switch (Settings.detectorType)
+                else
                 {
-                    case Settings.DetectorType.None:
-                        break;
-                    case Settings.DetectorType.Haarcascade:
-                        var haarCascade = new CascadeClassifier(Settings.HAARCASCADE_FACES);
-                        frame = Settings.DetectFace(haarCascade, frame);
-                        break;
-                    case Settings.DetectorType.DNN:
-                        frame = Settings.DetectFaceDNN(frame);
-                        break;
+                    throw new Exception();
                 }
-                return BitmapSourceConverter.ToBitmapSource(frame);
             }
-            return null;
+            catch (Exception e)
+            {
+                Log.Warning(e.Message);
+            }
+            return new Mat();
         }
     }
 }

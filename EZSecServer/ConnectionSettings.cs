@@ -1,9 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Serilog;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace EZSecServer
 {
@@ -15,11 +13,7 @@ namespace EZSecServer
         public static string ServerIp = "127.0.0.1";
         public static string PublicKey = "";
         public static string PublicKeyExp = "";
-
-        public static void StartServer()
-        {
-
-        }
+        public static string ServerPort = "2222";
 
         public static void WriteConfig()
         {

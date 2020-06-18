@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace EZSecServer
+﻿namespace EZSecServer
 {
     public class Program
     {

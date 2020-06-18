@@ -1,11 +1,18 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using Serilog;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
+/*
+ * 
+ * 
+ * Could make a turret with this.
+ * Arduino can run it, check where square is in image
+ * map it to x/y of some robot system
+ * place a rifle on it
+ * shoot riflle to calibrate to camera
+ * Perccise-shooting turret...
+ */
 namespace EZSecCam
 {
     public class ConnectionSettings
@@ -15,11 +22,7 @@ namespace EZSecCam
         public static string ServerIp = "127.0.0.1";
         public static string PublicKey = "";
         public static string PublicKeyExp = "";
-
-        public static void StartServer()
-        {
-
-        }
+        public static string ServerPort = "2222";
 
         public static void WriteConfig()
         {

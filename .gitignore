@@ -1,0 +1,6 @@
+*.names
+*.caffemodel
+*.weights
+*.cfg
+EZSecCam\bin
+EZSecCam\Build
