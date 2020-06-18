@@ -2,5 +2,5 @@
 *.caffemodel
 *.weights
 *.cfg
-EZSecCam\bin
-EZSecCam\Build
+EZSecCam/bin
+EZSecCam/Build

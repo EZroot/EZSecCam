@@ -57,7 +57,6 @@ namespace EZSecCam
             {
                 if (capture.Read(frame))
                 {
-                    Cv2.Resize(frame, frame, new Size(frame.Width / 3, frame.Height / 3));
                     //Filter Camera Image
                     switch (Settings.filterType)
                     {
