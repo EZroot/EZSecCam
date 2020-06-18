@@ -27,8 +27,11 @@ namespace EZSecCam
         public const string DEPLOY_PATH = "Data/deploy.prototxt";
         public const string DNN_MODEL = "Data/res10_300x300_ssd_iter_140000.caffemodel";
 
-        public const string YOLO_CFG_PATH = "Data/yolov3.cfg";
-        public const string YOLO_WEIGHT_PATH = "Data/yolov3.weights";
+        public const string YOLOLARGE_CFG_PATH = "Data/yolov3-large.cfg";
+        public const string YOLOLARGE_WEIGHT_PATH = "Data/yolov3-large.weights";
+
+        public const string YOLO320_CFG_PATH = "Data/yolov3-320.cfg";
+        public const string YOLO320_WEIGHT_PATH = "Data/yolov3-320.weights";
 
         public const string YOLOTINY_CFG_PATH = "Data/yolov3-tiny.cfg";
         public const string YOLOTINY_WEIGHT_PATH = "Data/yolov3-tiny.weights";
@@ -52,7 +55,7 @@ namespace EZSecCam
         }
 
         public static FilterType filterType = FilterType.None;
-        public static DetectorType detectorType = DetectorType.None;
+        private static DetectorType detectorType1 = DetectorType.None;
 
         public static float Confidence = 0.6f;
         public static float NmsConfidence = 0.3f;
@@ -84,19 +87,45 @@ namespace EZSecCam
         static Net faceNet;
         static Mat blob;
 
-        public static void Init()
-        {
-            //faceNet = CvDnn.ReadNetFromDarknet(YOLOTINY_CFG_PATH, YOLOTINY_WEIGHT_PATH);
-            faceNet = CvDnn.ReadNetFromDarknet(YOLO_CFG_PATH, YOLO_WEIGHT_PATH);
-            faceNet.SetPreferableBackend(Net.Backend.OPENCV);
-            /*
-            0:DNN_BACKEND_DEFAULT 
-            1:DNN_BACKEND_HALIDE 
-            2:DNN_BACKEND_INFERENCE_ENGINE
-            3:DNN_BACKEND_OPENCV 
-             */
-            faceNet.SetPreferableTarget(0);
+        public static DetectorType DetectorType1 { get => detectorType1; set
+            {
+                if (value == DetectorType.Caffe)
+                    InitCaffe();
+                if (value == DetectorType.YoloV3)
+                    InitYoloV3();
+                Log.Debug("DetectorType Changed {0}", value);
+                detectorType1 = value;
+            }
+        }
 
+        //This speeds up our response time by pre-loading stuff
+        public static void InitYoloV3()
+        {
+            //Caffe
+
+
+            //YOLO V3
+            faceNet = CvDnn.ReadNetFromDarknet(YOLOTINY_CFG_PATH, YOLOTINY_WEIGHT_PATH);
+            //faceNet = CvDnn.ReadNetFromDarknet(YOLOLARGE_CFG_PATH, YOLOLARGE_WEIGHT_PATH);
+            //faceNet = CvDnn.ReadNetFromDarknet(YOLO320_CFG_PATH, YOLO320_WEIGHT_PATH); - same response some as "large", maybe its the same file lol
+            faceNet.SetPreferableBackend(Net.Backend.OPENCV);
+            faceNet.SetPreferableTarget(0);
+            /*
+            0:DNN_TARGET_CPU 
+            1:DNN_TARGET_OPENCL
+            2:DNN_TARGET_OPENCL_FP16
+            3:DNN_TARGET_MYRIAD 
+            4:DNN_TARGET_FPGA 
+             */
+        }
+
+        //This speeds up our response time by pre-loading stuff
+        public static void InitCaffe()
+        {
+            //Caffe
+            faceNet = CvDnn.ReadNetFromCaffe(DEPLOY_PATH, DNN_MODEL);
+            faceNet.SetPreferableBackend(Net.Backend.OPENCV);
+            faceNet.SetPreferableTarget(0);
             /*
             0:DNN_TARGET_CPU 
             1:DNN_TARGET_OPENCL
@@ -109,24 +138,7 @@ namespace EZSecCam
         public static Mat DetectFaceYoloV3(Mat frame, bool nms=true)
         {
             //facenet readnetfromdarknet
-            var blob = CvDnn.BlobFromImage(frame, 1 / 255.0, new Size(544, 544), new Scalar(), true, false);
-            //var faceNet = CvDnn.ReadNetFromDarknet(YOLOTINY_CFG_PATH, YOLOTINY_WEIGHT_PATH);
-            //faceNet.SetPreferableBackend(Net.Backend.OPENCV);
-            /*
-            0:DNN_BACKEND_DEFAULT 
-            1:DNN_BACKEND_HALIDE 
-            2:DNN_BACKEND_INFERENCE_ENGINE
-            3:DNN_BACKEND_OPENCV 
-             */
-            //faceNet.SetPreferableTarget(0);
-            
-            /*
-            0:DNN_TARGET_CPU 
-            1:DNN_TARGET_OPENCL
-            2:DNN_TARGET_OPENCL_FP16
-            3:DNN_TARGET_MYRIAD 
-            4:DNN_TARGET_FPGA 
-             */
+            var blob = CvDnn.BlobFromImage(frame, 1/255.0f, new Size(320, 320), new Scalar(), true, false);
             faceNet.SetInput(blob);
 
             //get output layer name
@@ -244,8 +256,7 @@ namespace EZSecCam
             int frameHeight = frame.Rows;
             int frameWidth = frame.Cols;
 
-            using var faceNet = CvDnn.ReadNetFromCaffe(DEPLOY_PATH, DNN_MODEL);
-            using var blob = CvDnn.BlobFromImage(frame, 1.0, new Size(300, 300),
+            using var blob = CvDnn.BlobFromImage(frame, 1.0, new Size(320, 320),
                 new Scalar(104, 117, 123), false, false);
             faceNet.SetInput(blob, "data");
 
@@ -268,6 +279,7 @@ namespace EZSecCam
                     int x2 = (int)(detectionMat.At<float>(i, 5) * frameWidth);
                     int y2 = (int)(detectionMat.At<float>(i, 6) * frameHeight);
 
+                    Log.Debug("confidence {0}% - {1}", confidence * 100, "face");
                     Cv2.Rectangle(frame, new Point(x1, y1), new Point(x2, y2), new Scalar(255, 0, 0), 2,
                         LineTypes.Link4);
                     Cv2.PutText(frame,
@@ -287,7 +299,7 @@ namespace EZSecCam
         {
             //label formating
             var label = $"{Labels[classes]} {probability * 100:0.00}%";
-            Log.Debug("confidence {0} % - {1}", confidence * 100, label);
+            Log.Debug("confidence {0}% - {1}", confidence * 100, label);
             var x1 = (centerX - width / 2) < 0 ? 0 : centerX - width / 2; //avoid left side over edge
             //draw result
             image.Rectangle(new Point(x1, centerY - height / 2), new Point(centerX + width / 2, centerY + height / 2), Colors[classes], 2);

@@ -68,7 +68,7 @@ namespace EZSecCam
                     }
 
                     //Detect people
-                    switch (Settings.detectorType)
+                    switch (Settings.DetectorType1)
                     {
                         case Settings.DetectorType.None:
                             break;

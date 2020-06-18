@@ -30,7 +30,6 @@ namespace EZSecCam
             Log.Information("Started debugger");
             #endregion
             //Settings.ReadConfig();
-            Settings.Init(); //Loads data for YoloV3 DNN, speeds up shit significantly
             InitializeComponent();
 
             DisableDetectorButtons();
@@ -73,13 +72,13 @@ namespace EZSecCam
 
             if (HaarcascadeFaceDetectionMenuItem.IsChecked)
             {
-                Settings.detectorType = Settings.DetectorType.Haarcascade;
+                Settings.DetectorType1 = Settings.DetectorType.Haarcascade;
                 Log.Debug("Haarcascade Face Detection {0} {1}", "Status: On", "Detecting faces");
             }
             else
             {
                 EnableDetectorButtons();
-                Settings.detectorType = Settings.DetectorType.None;
+                Settings.DetectorType1 = Settings.DetectorType.None;
                 Log.Debug("Haarcascade Face Detection {0}", "Status: Off");
             }
         }
@@ -92,13 +91,13 @@ namespace EZSecCam
 
             if (CaffeDNNFaceDetectionMenuItem.IsChecked)
             {
-                Settings.detectorType = Settings.DetectorType.Caffe;
+                Settings.DetectorType1 = Settings.DetectorType.Caffe;
                 Log.Debug("Caffe DNN Face Detection {0}", "Status: On");
             }
             else
             {
                 EnableDetectorButtons();
-                Settings.detectorType = Settings.DetectorType.None;
+                Settings.DetectorType1 = Settings.DetectorType.None;
                 Log.Debug("Caffe DNN Face Detection {0}", "Status: Off");
             }
         }
@@ -111,14 +110,13 @@ namespace EZSecCam
 
             if (YoloV3DNNFaceDetectionMenuItem.IsChecked)
             {
-                //Settings.Yolov3Init();
-                Settings.detectorType = Settings.DetectorType.YoloV3;
+                Settings.DetectorType1 = Settings.DetectorType.YoloV3;
                 Log.Debug("YoloV3 (You only look once) DNN Face Detection {0}", "Status: On");
             }
             else
             {
                 EnableDetectorButtons();
-                Settings.detectorType = Settings.DetectorType.None;
+                Settings.DetectorType1 = Settings.DetectorType.None;
                 Log.Debug("YoloV3 (You only look once) DNN Face Detection {0}", "Status: Off");
             }
         }

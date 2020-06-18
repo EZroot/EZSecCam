@@ -1,9 +1,5 @@
 C:\Users\EZRoot\source\repos\EZSecCam\EZSecServer\bin\Debug\netcoreapp3.1\EZSecServer.exe
-C:\Users\EZRoot\source\repos\EZSecCam\EZSecServer\obj\Debug\netcoreapp3.1\EZSecServer.csprojAssemblyReference.cache
-C:\Users\EZRoot\source\repos\EZSecCam\EZSecServer\obj\Debug\netcoreapp3.1\EZSecServer.AssemblyInfoInputs.cache
-C:\Users\EZRoot\source\repos\EZSecCam\EZSecServer\obj\Debug\netcoreapp3.1\EZSecServer.AssemblyInfo.cs
 C:\Users\EZRoot\source\repos\EZSecCam\EZSecServer\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
-C:\Users\EZRoot\source\repos\EZSecCam\EZSecServer\obj\Debug\netcoreapp3.1\EZSecServer.csproj.CopyComplete
 C:\Users\EZRoot\source\repos\EZSecCam\EZSecServer\bin\Debug\netcoreapp3.1\Serilog.dll
 C:\Users\EZRoot\source\repos\EZSecCam\EZSecServer\bin\Debug\netcoreapp3.1\Microsoft.Win32.SystemEvents.dll
 C:\Users\EZRoot\source\repos\EZSecCam\EZSecServer\bin\Debug\netcoreapp3.1\OpenCvSharp.Blob.dll
@@ -48,10 +44,6 @@ C:\Users\EZRoot\source\repos\EZSecCam\EZSecServer\bin\Debug\netcoreapp3.1\Micros
 C:\Users\EZRoot\source\repos\EZSecCam\EZSecServer\bin\Debug\netcoreapp3.1\Microsoft.Extensions.FileProviders.Abstractions.dll
 C:\Users\EZRoot\source\repos\EZSecCam\EZSecServer\bin\Debug\netcoreapp3.1\Microsoft.Extensions.FileProviders.Physical.dll
 C:\Users\EZRoot\source\repos\EZSecCam\EZSecServer\bin\Debug\netcoreapp3.1\Microsoft.Extensions.FileSystemGlobbing.dll
-C:\Users\EZRoot\source\repos\EZSecCam\EZSecServer\obj\Debug\netcoreapp3.1\EZSecServer.csproj.CoreCompileInputs.cache
-C:\Users\EZRoot\source\repos\EZSecCam\EZSecServer\obj\Debug\netcoreapp3.1\EZSecServer.dll
-C:\Users\EZRoot\source\repos\EZSecCam\EZSecServer\obj\Debug\netcoreapp3.1\EZSecServer.pdb
-C:\Users\EZRoot\source\repos\EZSecCam\EZSecServer\obj\Debug\netcoreapp3.1\EZSecServer.genruntimeconfig.cache
 C:\Users\EZRoot\source\repos\EZSecCam\EZSecCam\Build\netcoreapp3.1\EZSecServer.exe
 C:\Users\EZRoot\source\repos\EZSecCam\EZSecCam\Build\netcoreapp3.1\Data\appsettings.json
 C:\Users\EZRoot\source\repos\EZSecCam\EZSecCam\Build\netcoreapp3.1\Data\deploy.prototxt
@@ -111,3 +103,11 @@ C:\Users\EZRoot\source\repos\EZSecCam\EZSecServer\Build\netcoreapp3.1\runtimes\w
 C:\Users\EZRoot\source\repos\EZSecCam\EZSecServer\Build\netcoreapp3.1\runtimes\win-x86\native\opencv_videoio_ffmpeg430.dll
 C:\Users\EZRoot\source\repos\EZSecCam\EZSecServer\Build\netcoreapp3.1\runtimes\unix\lib\netcoreapp3.0\System.Drawing.Common.dll
 C:\Users\EZRoot\source\repos\EZSecCam\EZSecServer\Build\netcoreapp3.1\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll
+C:\Users\EZRoot\source\repos\EZSecCam\EZSecServer\obj\Debug\netcoreapp3.1\EZSecServer.csprojAssemblyReference.cache
+C:\Users\EZRoot\source\repos\EZSecCam\EZSecServer\obj\Debug\netcoreapp3.1\EZSecServer.csproj.CoreCompileInputs.cache
+C:\Users\EZRoot\source\repos\EZSecCam\EZSecServer\obj\Debug\netcoreapp3.1\EZSecServer.AssemblyInfoInputs.cache
+C:\Users\EZRoot\source\repos\EZSecCam\EZSecServer\obj\Debug\netcoreapp3.1\EZSecServer.AssemblyInfo.cs
+C:\Users\EZRoot\source\repos\EZSecCam\EZSecServer\obj\Debug\netcoreapp3.1\EZSecServer.csproj.CopyComplete
+C:\Users\EZRoot\source\repos\EZSecCam\EZSecServer\obj\Debug\netcoreapp3.1\EZSecServer.dll
+C:\Users\EZRoot\source\repos\EZSecCam\EZSecServer\obj\Debug\netcoreapp3.1\EZSecServer.pdb
+C:\Users\EZRoot\source\repos\EZSecCam\EZSecServer\obj\Debug\netcoreapp3.1\EZSecServer.genruntimeconfig.cache
