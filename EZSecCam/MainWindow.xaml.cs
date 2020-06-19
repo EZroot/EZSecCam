@@ -1,9 +1,15 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using EZServerAPI.Net;
+using Microsoft.Extensions.Configuration;
+using OpenCvSharp;
 using OpenCvSharp.Extensions;
 using Serilog;
 using System;
 using System.Diagnostics;
+using System.Drawing;
+using System.Net;
+using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
@@ -52,16 +58,28 @@ namespace EZSecCam
                     DispatcherTimer Timer = new DispatcherTimer();
                     Timer.Tick += (sender, e) =>
                     {
-                        BitmapSource frame = BitmapSourceConverter.ToBitmapSource(Camera.Instance.GetNextFrame());
+                        Mat nextFrame = Camera.Instance.GetNextFrame();
+                        BitmapSource frame = BitmapSourceConverter.ToBitmapSource(nextFrame);
+                        /*if (Client.isConnected) 
+                        {
+                            Stopwatch s = new Stopwatch();
+                            s.Start();
+                            Cv2.Resize(nextFrame, nextFrame, new OpenCvSharp.Size(640, 480));
+                            Client.SendData(Client.BitmapSourceToArray(BitmapSourceConverter.ToBitmapSource(nextFrame)));
+                            s.Stop();
+                            Log.Debug("Resize Client data runtime: {0}ms", s.ElapsedMilliseconds);
+                            Client.Disconnect();
+                        }*/
                         WebcamImage.Source = frame;
                     };
-                    Timer.Interval = TimeSpan.FromMilliseconds(30);
+                    Timer.Interval = TimeSpan.FromMilliseconds(1000);
                     Timer.Start();
                 }));
             }));
 
             EnableDetectorButtons();
             EnableFilterButtons();
+            StopServerMenuItem.IsEnabled = false;
             StartWebcamMenuItem.IsEnabled = false;
         }
 
@@ -155,12 +173,94 @@ namespace EZSecCam
 
         private void ConnectMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            Client.Connect();
+            ThreadHandler.Instance.ProcessWithThreadPoolMethod(new WaitCallback(delegate (object sender)
+            {
+                Client client = new Client
+                {
+                    IPAddress = IPAddress.IPv6Loopback,
+                    Port = 2222,
+                    ConnectedCallback = async (c, isReconnected) =>
+                    {
+                        await c.WaitAsync();   // Wait for server banner
+                        await Task.Delay(50);   // Let the banner land in the console window
+                        Log.Debug("Client: type a message at the prompt, or empty to quit (server shutdown in 10s)");
+                        while (true)
+                        {
+                            // User input
+                            string enteredMessage = "This is a test";
+                            byte[] bytes = Encoding.UTF8.GetBytes(enteredMessage);
+                            await c.Send(new ArraySegment<byte>(bytes, 0, bytes.Length));
+
+                            // Wait for server response or closed connection
+                            await c.ByteBuffer.WaitAsync();
+                            if (c.IsClosing)
+                            {
+                                break;
+                            }
+                        }
+                    },
+                    ReceivedCallback = (c, count) =>
+                    {
+                        byte[] bytes = c.ByteBuffer.Dequeue(count);
+                        string message = Encoding.UTF8.GetString(bytes, 0, bytes.Length);
+                        Log.Debug("Client: received: " + message);
+                        return Task.CompletedTask;
+                    }
+                    //AutoReconnect = true
+                };
+                client.RunAsync().GetAwaiter().GetResult();
+            }));
+            //Client.Disconnect();
         }
 
         public void StartServerMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            Server.Start();
+            StopServerMenuItem.IsEnabled = true;
+            StartServerMenuItem.IsEnabled = false;
+
+            ThreadHandler.Instance.ProcessWithThreadPoolMethod(new WaitCallback(delegate (object sender)
+            {
+                var server = new AsyncTcpListener
+                {
+                    IPAddress = IPAddress.IPv6Any,
+                    Port = 2222,
+                    ClientConnectedCallback = tcpClient =>
+                        new AsyncTcpClient
+                        {
+                            ServerTcpClient = tcpClient,
+                            ConnectedCallback = async (serverClient, isReconnected) =>
+                            {
+                                await Task.Delay(500);
+                                byte[] bytes = Encoding.UTF8.GetBytes($"Hello, {tcpClient.Client.RemoteEndPoint}, my name is Server. Talk to me.");
+                                await serverClient.Send(new ArraySegment<byte>(bytes, 0, bytes.Length));
+                            },
+                            ReceivedCallback = async (serverClient, count) =>
+                            {
+                                byte[] bytes = serverClient.ByteBuffer.Dequeue(count);
+                                string message = Encoding.UTF8.GetString(bytes, 0, bytes.Length);
+                                Log.Debug("Server client: received: {0}", message);
+
+                                bytes = Encoding.UTF8.GetBytes("You said: " + message);
+                                await serverClient.Send(new ArraySegment<byte>(bytes, 0, bytes.Length));
+
+                                if (message == "bye")
+                                {
+                                // Let the server close the connection
+                                serverClient.Disconnect();
+                                }
+                            }
+                        }.RunAsync()
+                };
+                server.Message += (s, a) => Log.Debug("Server: {0}",a.Message);
+                server.RunAsync().GetAwaiter().GetResult();
+            }));
+            //Server.Start();
+        }
+
+        public void StopServerMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            StopServerMenuItem.IsEnabled = false ;
+            StartServerMenuItem.IsEnabled = true;
         }
 
         private void DisableFilterButtons()

@@ -1,0 +1,9 @@
+C:\Users\EZRoot\source\repos\EZSecCam\EZServerAPI\bin\Debug\netcoreapp3.1\EZServerAPI.deps.json
+C:\Users\EZRoot\source\repos\EZSecCam\EZServerAPI\bin\Debug\netcoreapp3.1\EZServerAPI.dll
+C:\Users\EZRoot\source\repos\EZSecCam\EZServerAPI\bin\Debug\netcoreapp3.1\EZServerAPI.pdb
+C:\Users\EZRoot\source\repos\EZSecCam\EZServerAPI\obj\Debug\netcoreapp3.1\EZServerAPI.csprojAssemblyReference.cache
+C:\Users\EZRoot\source\repos\EZSecCam\EZServerAPI\obj\Debug\netcoreapp3.1\EZServerAPI.csproj.CoreCompileInputs.cache
+C:\Users\EZRoot\source\repos\EZSecCam\EZServerAPI\obj\Debug\netcoreapp3.1\EZServerAPI.AssemblyInfoInputs.cache
+C:\Users\EZRoot\source\repos\EZSecCam\EZServerAPI\obj\Debug\netcoreapp3.1\EZServerAPI.AssemblyInfo.cs
+C:\Users\EZRoot\source\repos\EZSecCam\EZServerAPI\obj\Debug\netcoreapp3.1\EZServerAPI.dll
+C:\Users\EZRoot\source\repos\EZSecCam\EZServerAPI\obj\Debug\netcoreapp3.1\EZServerAPI.pdb

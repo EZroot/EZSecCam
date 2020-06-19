@@ -23,9 +23,15 @@
                         <MenuItem x:Name="FilterMenuItem" Header="_Filter Frame" Click="FilterMenuItem_Click" InputGestureText="F4" IsCheckable="true"/>
                     </MenuItem>
                     <MenuItem Header="_Network">
-                        <MenuItem x:Name="StartServerMenuItem" Header="_Start Server" Click="StartServerMenuItem_Click"/>
-                        <MenuItem x:Name="ConnectMenuItem" Header="_Connect to IP" Click="ConnectMenuItem_Click"/>
-                        <MenuItem x:Name="ConnectSettingsMenuItem" Header="_Connection Settings" Click="ConnectSettingsMenuItem_Click"/>
+                        <MenuItem Header="_Server">
+                            <MenuItem x:Name="StartServerMenuItem" Header="_Start Server" Click="StartServerMenuItem_Click"/>
+                            <MenuItem x:Name="StopServerMenuItem" Header="_Stop Server" Click="StopServerMenuItem_Click"/>
+                        </MenuItem>
+                        <MenuItem Header="_Client">
+                            <MenuItem x:Name="ConnectMenuItem" Header="_Connect to IP" Click="ConnectMenuItem_Click"/>
+                        </MenuItem>
+                        <Separator/>
+                        <MenuItem x:Name="ConnectSettingsMenuItem" Header="_Network Settings" Click="ConnectSettingsMenuItem_Click"/>
                     </MenuItem>
                 </Menu>
                 <Grid DockPanel.Dock="Bottom" Margin="3">

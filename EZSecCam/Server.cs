@@ -1,63 +1,54 @@
-﻿using Serilog;
+﻿using EZServerAPI.Net;
+using EZServerAPI.Util;
+using Serilog;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace EZSecCam
 {
-    public class Server
-    {
-        private Server()
-        {
-        }
+    public class Server : AsyncTcpClient
+	{
+		public Server()
+		{
+			Message += (s, a) => Log.Debug("Server client: {0}", a.Message);
+		}
 
-        public static string ServerPort = "2222";
-        public static bool listen = true;
+		protected override async Task OnConnectedAsync(bool isReconnected)
+		{
+			await Task.Delay(500);
+			byte[] bytes = Encoding.UTF8.GetBytes("Hello, my name is Server. Talk to me.");
+			await Send(new ArraySegment<byte>(bytes, 0, bytes.Length));
+		}
 
-        public static async void Start()
-        {
-            try
-            {
-                IPAddress ipAddress = IPAddress.Parse("127.0.0.1");
+		protected override async Task OnReceivedAsync(int count)
+		{
+			byte[] bytes = ByteBuffer.Dequeue(count);
+			string message = Encoding.UTF8.GetString(bytes, 0, bytes.Length);
+			Log.Debug("Server client: received: {0}", message);
 
-                Log.Debug("Starting TCP listener... {0}:{1} listen={2}", ipAddress, ServerPort, listen);
+			bytes = Encoding.UTF8.GetBytes("You said: " + message);
+			await Send(new ArraySegment<byte>(bytes, 0, bytes.Length));
+		}
+	}
+	
+	public class ServerHandler
+	{
+		private ServerHandler()
+		{ 
+		}
 
-                TcpListener listener = new TcpListener(ipAddress, int.Parse(ServerPort));
+		public static Server server;
+		public static Client client;
 
-                listener.Start();
-
-                while (listen)
-                {
-                    if (listener.Pending())
-                        await HandleClient(await listener.AcceptTcpClientAsync());
-                    else
-                        await Task.Delay(100); //<--- timeout
-                }
-
-                listener.Stop();
-            }
-            catch (Exception e)
-            {
-                Log.Debug("Error: {0}", e.StackTrace);
-            }
-        }
-
-        private static async Task HandleClient(TcpClient clt)
-        {
-            using NetworkStream ns = clt.GetStream();
-            using StreamReader sr = new StreamReader(ns);
-            string msg = await sr.ReadToEndAsync();
-
-            Log.Debug("Received new message ({0} bytes):{1}", msg.Length,msg);
-        }
-
-        private static void SendData()
-        {
-        }
-    }
+	}
 }

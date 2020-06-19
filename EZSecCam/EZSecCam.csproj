@@ -82,4 +82,10 @@
     <Folder Include="Resources\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="EZServerAPI">
+      <HintPath>..\EZServerAPI\bin\Release\netcoreapp3.1\EZServerAPI.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

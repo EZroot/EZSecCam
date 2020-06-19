@@ -66,4 +66,3 @@ C:\Users\EZRoot\source\repos\EZSecCam\EZSecCam\Build\netcoreapp3.1\Data\yolov3-3
 C:\Users\EZRoot\source\repos\EZSecCam\EZSecCam\Build\netcoreapp3.1\Data\yolov3-320.weights
 C:\Users\EZRoot\source\repos\EZSecCam\EZSecCam\Build\netcoreapp3.1\Data\yolov3-large.cfg
 C:\Users\EZRoot\source\repos\EZSecCam\EZSecCam\Build\netcoreapp3.1\Data\yolov3-large.weights
-C:\Users\EZRoot\source\repos\EZSecCam\EZSecCam\obj\x64\Debug\netcoreapp3.1\EZSecCam.csprojAssemblyReference.cache

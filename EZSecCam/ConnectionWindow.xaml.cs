@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System;
+using System.Text;
+using System.Windows;
 
 namespace EZSecCam
 {
@@ -27,7 +29,6 @@ namespace EZSecCam
 
         public void ConnectSettingsButton_OnClick(object sender, RoutedEventArgs e)
         {
-            Client.Connect();
         }
     }
 }
