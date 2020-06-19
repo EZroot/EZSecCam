@@ -28,11 +28,6 @@ namespace EZSecCam
         public void ConnectSettingsButton_OnClick(object sender, RoutedEventArgs e)
         {
             Client.Connect();
-            for (int i = 0; i < 5; i++)
-            {
-                Client.SendData("Nooby nooberton is a noob");
-            }
-            Client.EndConnection();
         }
     }
 }

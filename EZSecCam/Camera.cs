@@ -94,6 +94,7 @@ namespace EZSecCam
             {
                 Log.Warning(e.Message);
             }
+            Log.Warning("Failed to grab frame {0}", "returning new Mat()");
             return new Mat();
         }
     }

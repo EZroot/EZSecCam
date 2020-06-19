@@ -154,7 +154,7 @@ namespace EZSecCam
             faceNet.Forward(outs, outNames);
 
             sw.Stop();
-            Log.Debug("Runtime:{0} ms", sw.ElapsedMilliseconds);
+            //Log.Debug("Runtime:{0} ms", sw.ElapsedMilliseconds);
             #endregion
 
             //get result
@@ -238,7 +238,7 @@ namespace EZSecCam
                 Rect[] faces = cascade.DetectMultiScale(
                     gray, 1.08, 2, HaarDetectionType.ScaleImage, new OpenCvSharp.Size(30, 30));
                 sw.Stop();
-                Log.Debug("Runtime:{0} ms", sw.ElapsedMilliseconds);
+                //Log.Debug("Runtime:{0} ms", sw.ElapsedMilliseconds);
 
                 // Render all detected faces
                 foreach (Rect face in faces)
@@ -264,10 +264,11 @@ namespace EZSecCam
             sw.Start();
             using var detection = faceNet.Forward("detection_out");
             sw.Stop();
-            Log.Debug("Runtime:{0} ms", sw.ElapsedMilliseconds);
+            //Log.Debug("Runtime:{0} ms", sw.ElapsedMilliseconds);
 
             using var detectionMat = new Mat(detection.Size(2), detection.Size(3), MatType.CV_32F,
                 detection.Ptr(0));
+
             for (int i = 0; i < detectionMat.Rows; i++)
             {
                 float confidence = detectionMat.At<float>(i, 2);
@@ -299,7 +300,7 @@ namespace EZSecCam
         {
             //label formating
             var label = $"{Labels[classes]} {probability * 100:0.00}%";
-            Log.Debug("confidence {0}% - {1}", confidence * 100, label);
+            //Log.Debug("confidence {0}% - {1}", confidence * 100, label);
             var x1 = (centerX - width / 2) < 0 ? 0 : centerX - width / 2; //avoid left side over edge
             //draw result
             image.Rectangle(new Point(x1, centerY - height / 2), new Point(centerX + width / 2, centerY + height / 2), Colors[classes], 2);

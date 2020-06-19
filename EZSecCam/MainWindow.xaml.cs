@@ -2,6 +2,7 @@
 using OpenCvSharp.Extensions;
 using Serilog;
 using System;
+using System.Diagnostics;
 using System.Threading;
 using System.Windows;
 using System.Windows.Media.Imaging;
@@ -154,13 +155,12 @@ namespace EZSecCam
 
         private void ConnectMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            ConnectionWindow connectWindow = new ConnectionWindow();
-            connectWindow.Show();
+            Client.Connect();
         }
 
         public void StartServerMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            //Launch EZServer.exe binary
+            Server.Start();
         }
 
         private void DisableFilterButtons()
