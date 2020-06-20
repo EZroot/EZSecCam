@@ -4,16 +4,16 @@
 exe
 C#
 .cs
-C:\Users\EZRoot\source\repos\EZSecCam\EZSecCam\obj\Debug\netcoreapp3.1\
+C:\Users\EZRoot\Desktop\EZSecCam\EZSecCam\obj\Debug\netcoreapp3.1\
 EZSecCam
 none
 false
 TRACE;DEBUG;NETCOREAPP;NETCOREAPP3_1
-C:\Users\EZRoot\source\repos\EZSecCam\EZSecCam\App.xaml
+C:\Users\EZRoot\Desktop\EZSecCam\EZSecCam\App.xaml
 2-696641314
 
-10126134139
-2191509706396
+10765395551
+2191732978876
 ConnectionWindow.xaml;MainWindow.xaml;
 
 False

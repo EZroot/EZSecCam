@@ -5559,11 +5559,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\EZRoot\\source\\repos\\EZSecCam\\EZSecCam\\EZSecCam.csproj",
+      "projectUniqueName": "C:\\Users\\EZRoot\\Desktop\\EZSecCam\\EZSecCam\\EZSecCam.csproj",
       "projectName": "EZSecCam",
-      "projectPath": "C:\\Users\\EZRoot\\source\\repos\\EZSecCam\\EZSecCam\\EZSecCam.csproj",
+      "projectPath": "C:\\Users\\EZRoot\\Desktop\\EZSecCam\\EZSecCam\\EZSecCam.csproj",
       "packagesPath": "C:\\Users\\EZRoot\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\EZRoot\\source\\repos\\EZSecCam\\EZSecCam\\obj\\",
+      "outputPath": "C:\\Users\\EZRoot\\Desktop\\EZSecCam\\EZSecCam\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Microsoft\\Xamarin\\NuGet\\"

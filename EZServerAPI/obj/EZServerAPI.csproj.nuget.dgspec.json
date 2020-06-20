@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\EZRoot\\source\\repos\\EZSecCam\\EZServerAPI\\EZServerAPI.csproj": {}
+    "C:\\Users\\EZRoot\\Desktop\\EZSecCam\\EZServerAPI\\EZServerAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\EZRoot\\source\\repos\\EZSecCam\\EZServerAPI\\EZServerAPI.csproj": {
+    "C:\\Users\\EZRoot\\Desktop\\EZSecCam\\EZServerAPI\\EZServerAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\EZRoot\\source\\repos\\EZSecCam\\EZServerAPI\\EZServerAPI.csproj",
+        "projectUniqueName": "C:\\Users\\EZRoot\\Desktop\\EZSecCam\\EZServerAPI\\EZServerAPI.csproj",
         "projectName": "EZServerAPI",
-        "projectPath": "C:\\Users\\EZRoot\\source\\repos\\EZSecCam\\EZServerAPI\\EZServerAPI.csproj",
+        "projectPath": "C:\\Users\\EZRoot\\Desktop\\EZSecCam\\EZServerAPI\\EZServerAPI.csproj",
         "packagesPath": "C:\\Users\\EZRoot\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\EZRoot\\source\\repos\\EZSecCam\\EZServerAPI\\obj\\",
+        "outputPath": "C:\\Users\\EZRoot\\Desktop\\EZSecCam\\EZServerAPI\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\"

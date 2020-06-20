@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "lWQutSPbiHFBQs7A86qjC3MgrEgePzayozxA4olzhQO7avODehHTAl3xzLuFYWS726ejtPyqsUrOaEwrAMTbXw==",
+  "dgSpecHash": "eBfW/L1J0PkY5a9Uv/yh7XX49yo2SpOFVESb8/UPavnH65zH4CnIoVTCDEn/Ip1VuQCI/CEm+KdbCVhXRAqenA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\EZRoot\\source\\repos\\EZSecCam\\EZSecCam\\EZSecCam.csproj",
+  "projectFilePath": "C:\\Users\\EZRoot\\Desktop\\EZSecCam\\EZSecCam\\EZSecCam.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\EZRoot\\.nuget\\packages\\microsoft.dotnet.platformabstractions\\2.0.4\\microsoft.dotnet.platformabstractions.2.0.4.nupkg.sha512",
     "C:\\Users\\EZRoot\\.nuget\\packages\\microsoft.extensions.configuration\\3.1.5\\microsoft.extensions.configuration.3.1.5.nupkg.sha512",
